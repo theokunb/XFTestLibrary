@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:XFTestLibrary.ViewModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="XFTestLibrary.Views.EditBooksPage"
+             Title="Edit books">
+    <ContentPage.Behaviors>
+        <xct:EventToCommandBehavior EventName="Appearing"
+                                    Command="{Binding CommandAppearing}"/>
+    </ContentPage.Behaviors>
+    <ContentPage.BindingContext>
+        <viewmodel:EditBooksViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <Grid>
+            <ScrollView Orientation="Vertical">
+                <StackLayout>
+                    <Entry Text="{Binding BookTitle}"
+                           Placeholder="title"/>
+
+                    <StackLayout BindableLayout.ItemsSource="{Binding Authors}"
+                                 Orientation="Vertical">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Entry Text="{Binding FullName}"
+                                       Placeholder="Author"/>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="- author"
+                                Command="{Binding CommandRemoveAuthor}"/>
+                        <Button Text="+ author"
+                                Command="{Binding CommandAddAuthor}"/>
+                    </StackLayout>
+
+                    <StackLayout BindableLayout.ItemsSource="{Binding Genres}"
+                                 Orientation="Vertical">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Entry Text="{Binding Title}"
+                                       Placeholder="Genre"/>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="- genre"
+                                Command="{Binding CommandGenreManipulation}"
+                                CommandParameter="-"/>
+                        <Button Text="+ genre"
+                                Command="{Binding CommandGenreManipulation}"
+                                CommandParameter="+"/>
+                    </StackLayout>
+                    
+                    <Button Text="Add"
+                            Command="{Binding CommandAddBook}"/>
+                </StackLayout>
+            </ScrollView>
+            <ActivityIndicator IsVisible="{Binding IsBusy}"
+                               IsRunning="{Binding IsBusy}"
+                               VerticalOptions="Center"
+                               HorizontalOptions="Center"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:XFTestLibrary.ViewModels"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="XFTestLibrary.Views.BooksPage"
+             Title="Books">
+    <ContentPage.BindingContext>
+        <viewmodels:BooksViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Behaviors>
+        <xct:EventToCommandBehavior EventName="Appearing"
+                                    Command="{Binding CommandAppearing}"/>
+    </ContentPage.Behaviors>
+    <ContentPage.Content>
+        <RefreshView IsRefreshing="{Binding IsRefreshingView}"
+                     Command="{Binding CommandRefreshView}">
+            <ScrollView Orientation="Vertical"
+                        VerticalScrollBarVisibility="Never">
+                <StackLayout Orientation="Vertical">
+                    <Picker SelectedItem="{Binding SelectedFilter}"
+                            ItemsSource="{Binding Filters}"
+                            ItemDisplayBinding="{Binding Title}"/>
+                    <Entry Text="{Binding SearchPattern}"
+                           Placeholder="search"/>
+                    <StackLayout Orientation="Vertical"
+                                 BindableLayout.ItemsSource="{Binding Books}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Frame CornerRadius="10">
+                                    <StackLayout Orientation="Vertical">
+                                        <Label Text="{Binding Title}"/>
+                                    </StackLayout>
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:BooksViewModel}}, Path=CommandBookTapped}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
+                                </Frame>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </ContentPage.Content>
+</ContentPage>

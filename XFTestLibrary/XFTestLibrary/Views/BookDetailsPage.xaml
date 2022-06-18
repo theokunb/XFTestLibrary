@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:Class="XFTestLibrary.Views.BookDetailsPage">
+    <ContentPage.Behaviors>
+        <xct:EventToCommandBehavior EventName="Appearing"
+                                    Command="{Binding CommandAppearing}"/>
+    </ContentPage.Behaviors>
+    <ContentPage.Content>
+        <Grid>
+            <ScrollView Orientation="Vertical"
+                        VerticalScrollBarVisibility="Never">
+                <StackLayout Orientation="Vertical">
+                    <Entry Text="{Binding Title}"/>
+                    <StackLayout Orientation="Vertical"
+                                 BindableLayout.ItemsSource="{Binding Authors}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Entry Text="{Binding FullName}"
+                                       Placeholder="Author"/>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="- author"
+                                Command="{Binding CommandAuthorsManipulation}"
+                                CommandParameter="-"/>
+                        <Button Text="+ author"
+                                Command="{Binding CommandAuthorsManipulation}"
+                                CommandParameter="+"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Vertical"
+                                 BindableLayout.ItemsSource="{Binding Genres}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Entry Text="{Binding Title}"
+                                       Placeholder="Genre"/>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="- genre"
+                                Command="{Binding CommandGenresManipulation}"
+                                CommandParameter="-"/>
+                        <Button Text="+ genre"
+                                Command="{Binding CommandGenresManipulation}"
+                                CommandParameter="+"/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <Button Text="save and exit"
+                    VerticalOptions="End"
+                    Command="{Binding CommandSaveAndClose}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
