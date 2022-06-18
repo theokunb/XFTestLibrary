@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using XFTestLibrary.Models;
 
@@ -23,9 +24,12 @@ namespace XFTestLibrary.ViewModels
             CommandAddAuthor = new Command(param => AddAuthorClicked(param));
             CommandRemoveAuthor = new Command(param => RemoveAuthorCLicked(param));
             CommandGenreManipulation = new Command(param => OnGenreChanged(param));
+            CommandAddCover = new Command(param => AddCoverClicked(param));
         }
 
 
+        private Cover cover;
+        private ImageSource imageCover;
         private bool isLoaded;
         private readonly LibraryMap map;
         private string bookTitle;
@@ -40,6 +44,7 @@ namespace XFTestLibrary.ViewModels
         public ICommand CommandAddAuthor { get; }
         public ICommand CommandRemoveAuthor { get; }
         public ICommand CommandGenreManipulation { get; }
+        public ICommand CommandAddCover { get; }
         public string BookTitle
         {
             get => bookTitle;
@@ -48,6 +53,17 @@ namespace XFTestLibrary.ViewModels
                 if (bookTitle == value)
                     return;
                 bookTitle = value;
+                OnPropertyChnaged();
+            }
+        }
+        public ImageSource ImageCover
+        {
+            get => imageCover;
+            set
+            {
+                if (imageCover == value)
+                    return;
+                imageCover = value;
                 OnPropertyChnaged();
             }
         }
@@ -94,13 +110,20 @@ namespace XFTestLibrary.ViewModels
                     Genres[i] = genre;
             }
 
+
             var book = await App.Database.InsertBookAsync(new Book()
             {
                 Title = bookTitle
             });
 
+            if(cover != null)
+            {
+                cover = await App.Database.InsertCoverAsync(cover);
+                book.IdCover = cover.Id;
+            }
 
-            foreach(var author in Authors)
+
+            foreach (var author in Authors)
                 await App.Database.InsertBookAndAuthorAsync(new BookAndAuthor()
                 {
                     IdBook = book.Id,
@@ -176,6 +199,30 @@ namespace XFTestLibrary.ViewModels
                 if (string.IsNullOrEmpty(element.Title))
                     return true;
             return false;
+        }
+        private async void AddCoverClicked(object param)
+        {
+            if (IsBusy)
+                return;
+            IsBusy = true;
+
+            var pickedImage = await MediaPicker.PickPhotoAsync();
+            if (pickedImage == null)
+            {
+                IsBusy = false;
+                return;
+            }
+            string fullPath = await App.Storage.PushImageAsync(pickedImage);
+
+            ImageCover = ImageSource.FromUri(new Uri(fullPath));
+
+            cover = new Cover()
+            {
+                fileName = pickedImage.FileName,
+                FullPath = fullPath
+            };
+
+            IsBusy = false;
         }
     }
 }

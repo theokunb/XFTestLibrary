@@ -47,6 +47,12 @@
                                 Command="{Binding CommandGenresManipulation}"
                                 CommandParameter="+"/>
                     </StackLayout>
+                    <Image Source="{Binding CoverImage}"
+                           WidthRequest="100"
+                           HeightRequest="150"
+                           Aspect="AspectFit"/>
+                    <Button Text="Add cover"
+                            Command="{Binding CommandAddCover}"/>
                 </StackLayout>
             </ScrollView>
             <Button Text="save and exit"

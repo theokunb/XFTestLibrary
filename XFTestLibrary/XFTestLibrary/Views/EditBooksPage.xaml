@@ -52,11 +52,18 @@
                                 Command="{Binding CommandGenreManipulation}"
                                 CommandParameter="+"/>
                     </StackLayout>
-                    
-                    <Button Text="Add"
-                            Command="{Binding CommandAddBook}"/>
+                    <Image Source="{Binding ImageCover}"
+                           Aspect="AspectFit"
+                           WidthRequest="100"
+                           HeightRequest="150"/>
+                    <Button Text="Add Cover"
+                            Command="{Binding CommandAddCover}"/>
+                    <Button Text="Add book"
+                            Command="{Binding CommandAddBook}"
+                            VerticalOptions="End"/>
                 </StackLayout>
             </ScrollView>
+            
             <ActivityIndicator IsVisible="{Binding IsBusy}"
                                IsRunning="{Binding IsBusy}"
                                VerticalOptions="Center"

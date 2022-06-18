@@ -10,7 +10,16 @@ namespace XFTestLibrary
 {
     public partial class App : Application
     {
+        public App()
+        {
+            InitializeComponent();
+
+            MainPage = new MainTabbedPage();
+        }
+
+
         private static IDataBase database;
+        private static IStorage storage;
 
 
         public static IDataBase Database
@@ -22,13 +31,18 @@ namespace XFTestLibrary
                 return database;
             }
         }
-
-        public App()
+        public static IStorage Storage
         {
-            InitializeComponent();
-
-            MainPage = new MainTabbedPage();
+            get
+            {
+                if (storage == null)
+                    storage = new FireBaseStorage("xftestlibrary.appspot.com");
+                return storage;
+            }
         }
+
+
+        
 
         protected override void OnStart()
         {

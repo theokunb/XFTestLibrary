@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using XFTestLibrary.Models;
 
@@ -21,6 +22,7 @@ namespace XFTestLibrary.ViewModels
             CommandAuthorsManipulation = new Command(param => AuthorsChanged(param));
             CommandGenresManipulation = new Command(param => GenresChanged(param));
             CommandSaveAndClose = new Command(param => SaveAndCloseTapped(param));
+            CommandAddCover = new Command(param => AddCoverTapped(param));
         }
 
 
@@ -30,6 +32,7 @@ namespace XFTestLibrary.ViewModels
         private bool isRequiredFieldAreEmpty => string.IsNullOrEmpty(Title) || IsAnyFieldEmpty();
         private List<BookAndAuthor> bookAndAuthors;
         private List<BookAndGenre> bookAndGenres;
+        private ImageSource coverImage;
 
 
         public ObservableCollection<Author> Authors { get; set; }
@@ -38,6 +41,7 @@ namespace XFTestLibrary.ViewModels
         public ICommand CommandAuthorsManipulation { get; }
         public ICommand CommandGenresManipulation { get; }
         public ICommand CommandSaveAndClose { get; }
+        public ICommand CommandAddCover { get; }
         public string Title
         {
             get => title;
@@ -49,6 +53,19 @@ namespace XFTestLibrary.ViewModels
                 OnPropertyChnaged();
             }
         }
+        public ImageSource CoverImage
+        {
+            get => coverImage;
+            set
+            {
+                if (coverImage == value)
+                    return;
+                coverImage = value;
+                OnPropertyChnaged();
+            }
+        }
+
+
 
         private async void OnAppearing(object param)
         {
@@ -64,7 +81,10 @@ namespace XFTestLibrary.ViewModels
             foreach (var element in bookAndGenres)
                 Genres.Add(await App.Database.GetGenreAsync(element.IdGenre));
 
-
+            if (selectedBook.IdCover > 0)
+            {
+                CoverImage = (await App.Database.GetCoverAsync(selectedBook.IdCover)).FullPath;
+            }
             isLoaded = true;
         }
         private void GenresChanged(object param)
@@ -163,6 +183,36 @@ namespace XFTestLibrary.ViewModels
                 if (string.IsNullOrEmpty(element.Title))
                     return true;
             return false;
+        }
+        private async void AddCoverTapped(object param)
+        {
+            if (IsBusy)
+                return;
+            IsBusy = true;
+
+            var pickedImage = await MediaPicker.PickPhotoAsync();
+            if(pickedImage == null)
+            {
+                IsBusy = false;
+                return;
+            }
+            string fullPath = await App.Storage.PushImageAsync(pickedImage);
+
+
+            Cover cover = new Cover()
+            {
+                fileName = pickedImage.FileName,
+                FullPath = fullPath
+            };
+            cover = await App.Database.InsertCoverAsync(cover);
+            selectedBook.IdCover = cover.Id;
+
+
+            await App.Database.UpdateBookAsync(selectedBook);
+
+            CoverImage = ImageSource.FromUri(new Uri(fullPath));
+
+            IsBusy = false;
         }
     }
 }

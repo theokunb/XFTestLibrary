@@ -17,6 +17,7 @@ namespace XFTestLibrary.Models
             database.CreateTableAsync<BookAndGenre>().Wait();
             database.CreateTableAsync<Genre>().Wait();
             database.CreateTableAsync<BookPlace>().Wait();
+            database.CreateTableAsync<Cover>().Wait();
         }
 
         private readonly SQLiteAsyncConnection database;
@@ -190,6 +191,16 @@ namespace XFTestLibrary.Models
         public Task RemoveBookAndGenre(int idBook)
         {
             return database.ExecuteAsync($"delete from BookAndGenre where IdBook = {idBook}");
+        }
+
+        public async Task<Cover> InsertCoverAsync(Cover cover)
+        {
+            await database.InsertAsync(cover);
+            return (await database.Table<Cover>().ToListAsync()).Last();
+        }
+        public Task<Cover> GetCoverAsync(int idCover)
+        {
+            return database.Table<Cover>().Where(cover => cover.Id == idCover).FirstAsync();
         }
     }
 }

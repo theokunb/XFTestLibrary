@@ -27,5 +27,7 @@ namespace XFTestLibrary.Services
         Task<Genre> GetGenreAsync(int idGenre);
         Task RemoveBookAndAuthor(int idBook);
         Task RemoveBookAndGenre(int idBook);
+        Task<Cover> InsertCoverAsync(Cover cover);
+        Task<Cover> GetCoverAsync(int idCover);
     }
 }
