@@ -12,21 +12,22 @@
             <ScrollView Orientation="Vertical"
                         VerticalScrollBarVisibility="Never">
                 <StackLayout Orientation="Vertical">
-                    <Entry Text="{Binding Title}"/>
+                    <Entry Text="{Binding Title}"
+                           Placeholder="Название"/>
                     <StackLayout Orientation="Vertical"
                                  BindableLayout.ItemsSource="{Binding Authors}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <Entry Text="{Binding FullName}"
-                                       Placeholder="Author"/>
+                                       Placeholder="Автор"/>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Button Text="- author"
+                        <Button Text="- Автор"
                                 Command="{Binding CommandAuthorsManipulation}"
                                 CommandParameter="-"/>
-                        <Button Text="+ author"
+                        <Button Text="+ Автор"
                                 Command="{Binding CommandAuthorsManipulation}"
                                 CommandParameter="+"/>
                     </StackLayout>
@@ -35,15 +36,15 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <Entry Text="{Binding Title}"
-                                       Placeholder="Genre"/>
+                                       Placeholder="Жанр"/>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Button Text="- genre"
+                        <Button Text="- Жанр"
                                 Command="{Binding CommandGenresManipulation}"
                                 CommandParameter="-"/>
-                        <Button Text="+ genre"
+                        <Button Text="+ Жанр"
                                 Command="{Binding CommandGenresManipulation}"
                                 CommandParameter="+"/>
                     </StackLayout>
@@ -51,11 +52,11 @@
                            WidthRequest="100"
                            HeightRequest="150"
                            Aspect="AspectFit"/>
-                    <Button Text="Add cover"
+                    <Button Text="Добавить обложку"
                             Command="{Binding CommandAddCover}"/>
                 </StackLayout>
             </ScrollView>
-            <Button Text="save and exit"
+            <Button Text="Сохранить и выйти"
                     VerticalOptions="End"
                     Command="{Binding CommandSaveAndClose}"/>
         </Grid>

@@ -61,7 +61,7 @@ namespace XFTestLibrary.ViewModels
                 return;
             if (isAnyFieldEmpty)
             {
-                await Application.Current.MainPage.DisplayAlert("warning", "not all fields are filled", "ok");
+                await Application.Current.MainPage.DisplayAlert("ошибка", "не все поля заполнены", "ок");
                 return;
             }
             IsBusy = true;
@@ -71,7 +71,7 @@ namespace XFTestLibrary.ViewModels
             if (!token.IsValidToken)
             {
                 IsBusy = false;
-                await Application.Current.MainPage.DisplayAlert("error", "access denied", "ok");
+                await Application.Current.MainPage.DisplayAlert("ошибка", "доступ запрещен", "ок");
                 return;
             }
 

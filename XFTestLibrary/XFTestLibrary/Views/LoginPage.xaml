@@ -9,20 +9,20 @@
     <ContentPage.Content>
         <StackLayout Margin="10">
             <Entry Text="{Binding Login}"
-                   Placeholder="Login"
+                   Placeholder="Логин"
                    Margin="0,300,0,0"/>
             <Entry Text="{Binding Password}"
-                   Placeholder="Password"
+                   Placeholder="Пароль"
                    IsPassword="True"/>
             <StackLayout Orientation="Horizontal"
                          Margin="30,50">
-                <Label Text="no account? Sign up"
+                <Label Text="Нет учетной записи?&#x0a;зарегистрироваться."
                        VerticalOptions="StartAndExpand">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding CommandSignUp}"/>
                     </Label.GestureRecognizers>
                 </Label>
-                <Button Text="sign in"
+                <Button Text="Зарегистрироваться"
                         HorizontalOptions="EndAndExpand"
                         Command="{Binding CommandSingIn}"/>
             </StackLayout>

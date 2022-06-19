@@ -2,24 +2,24 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="XFTestLibrary.Views.SignUpPage"
-             Title="Sign up">
+             Title="Регистрация">
     <ContentPage.Content>
         <Grid>
             <StackLayout Margin="10">
                 <Entry Text="{Binding FirstName}"
-                       Placeholder="First name"/>
+                       Placeholder="Имя"/>
                 <Entry Text="{Binding LastName}"
-                       Placeholder="Last name"/>
+                       Placeholder="Фамилия"/>
                 <Entry Text="{Binding UserName}"
-                       Placeholder="User name"/>
+                       Placeholder="Логин"/>
                 <Entry Text="{Binding Password1}"
-                       Placeholder="Password"
+                       Placeholder="Пароль"
                        IsPassword="True"/>
                 <Entry Text="{Binding Password2}"
-                       Placeholder="Repeat password"
+                       Placeholder="Повтор пароля"
                        IsPassword="True"/>
             </StackLayout>
-            <Button Text="sign up"
+            <Button Text="Зарегистрироваться"
                     VerticalOptions="End"
                     Command="{Binding CommandSignUp}"
                     IsEnabled="{Binding AllFieldsFilled}"/>

@@ -4,7 +4,7 @@
              xmlns:viewmodels="clr-namespace:XFTestLibrary.ViewModels"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="XFTestLibrary.Views.BooksPage"
-             Title="Books">
+             Title="Книги">
     <ContentPage.BindingContext>
         <viewmodels:BooksViewModel/>
     </ContentPage.BindingContext>
@@ -23,7 +23,7 @@
                             ItemsSource="{Binding Filters}"
                             ItemDisplayBinding="{Binding Title}"/>
                     <Entry Text="{Binding SearchPattern}"
-                           Placeholder="search"/>
+                           Placeholder="Поиск..."/>
                     <StackLayout Orientation="Vertical"
                                  BindableLayout.ItemsSource="{Binding Books}">
                         <BindableLayout.ItemTemplate>

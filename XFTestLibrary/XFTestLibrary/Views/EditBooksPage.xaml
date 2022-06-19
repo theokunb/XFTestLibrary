@@ -4,7 +4,7 @@
              xmlns:viewmodel="clr-namespace:XFTestLibrary.ViewModels"
              xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
              x:Class="XFTestLibrary.Views.EditBooksPage"
-             Title="Edit books">
+             Title="Добавить книгу">
     <ContentPage.Behaviors>
         <xct:EventToCommandBehavior EventName="Appearing"
                                     Command="{Binding CommandAppearing}"/>
@@ -17,21 +17,21 @@
             <ScrollView Orientation="Vertical">
                 <StackLayout Margin="10">
                     <Entry Text="{Binding BookTitle}"
-                           Placeholder="title"/>
+                           Placeholder="Название"/>
 
                     <StackLayout BindableLayout.ItemsSource="{Binding Authors}"
                                  Orientation="Vertical">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <Entry Text="{Binding FullName}"
-                                       Placeholder="Author"/>
+                                       Placeholder="Автор"/>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Button Text="- author"
+                        <Button Text="- Автор"
                                 Command="{Binding CommandRemoveAuthor}"/>
-                        <Button Text="+ author"
+                        <Button Text="+ Автор"
                                 Command="{Binding CommandAddAuthor}"/>
                     </StackLayout>
 
@@ -40,15 +40,15 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <Entry Text="{Binding Title}"
-                                       Placeholder="Genre"/>
+                                       Placeholder="Жанр"/>
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </StackLayout>
                     <StackLayout Orientation="Horizontal">
-                        <Button Text="- genre"
+                        <Button Text="- Жанр"
                                 Command="{Binding CommandGenreManipulation}"
                                 CommandParameter="-"/>
-                        <Button Text="+ genre"
+                        <Button Text="+ Жанр"
                                 Command="{Binding CommandGenreManipulation}"
                                 CommandParameter="+"/>
                     </StackLayout>
@@ -56,9 +56,9 @@
                            Aspect="AspectFit"
                            WidthRequest="100"
                            HeightRequest="150"/>
-                    <Button Text="Add Cover"
+                    <Button Text="Добавить обложку"
                             Command="{Binding CommandAddCover}"/>
-                    <Button Text="Add book"
+                    <Button Text="Добавить книгу"
                             Command="{Binding CommandAddBook}"
                             VerticalOptions="End"/>
                 </StackLayout>

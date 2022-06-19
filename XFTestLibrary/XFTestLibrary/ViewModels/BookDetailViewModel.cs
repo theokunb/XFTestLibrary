@@ -128,6 +128,7 @@ namespace XFTestLibrary.ViewModels
             if(isRequiredFieldAreEmpty)
             {
                 IsBusy = false;
+                await Application.Current.MainPage.DisplayAlert("ошибка", "не все поля заполнены", "ок");
                 return;
             }
 

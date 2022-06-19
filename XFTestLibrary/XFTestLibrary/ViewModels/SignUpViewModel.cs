@@ -98,14 +98,14 @@ namespace XFTestLibrary.ViewModels
             IsBusy = true;
             if(Password1 != Password2)
             {
-                await Application.Current.MainPage.DisplayAlert("error", "passwords do not match", "ok");
+                await Application.Current.MainPage.DisplayAlert("ошибка", "пароли не совпадают", "ок");
                 IsBusy = false;
                 return;
             }
             var userFromDB = await App.Database.GetUserByUserName(UserName);
             if(userFromDB !=null)
             {
-                await Application.Current.MainPage.DisplayAlert("error", "user name is already busy", "ok");
+                await Application.Current.MainPage.DisplayAlert("ошибка", "логин уже занят", "ок");
                 IsBusy = false;
                 return;
             }
@@ -120,10 +120,10 @@ namespace XFTestLibrary.ViewModels
 
             await App.Database.InsertUserAsync(user);
 
-            await Application.Current.MainPage.DisplayAlert("thanks", "you are welcome!", "yep");
+            await Application.Current.MainPage.DisplayAlert("успашно", "добро пожаловать!", "yep");
 
             IsBusy = false;
-            await App.Current.MainPage.Navigation.PopModalAsync();
+            await Application.Current.MainPage.Navigation.PopModalAsync();
         }
     }
 }

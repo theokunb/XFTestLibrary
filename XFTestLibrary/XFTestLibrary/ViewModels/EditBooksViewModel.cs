@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Linq;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -81,14 +80,17 @@ namespace XFTestLibrary.ViewModels
             if (IsBusy)
                 return;
             if (isRequiredFieldAreEmpty)
+            {
+                await Application.Current.MainPage.DisplayAlert("ошибка", "не все поля заполнены", "ок");
                 return;
+            }
             IsBusy = true;
 
             var freePlace = await map.GetFreePlace();
             if(freePlace == null)
             {
                 IsBusy = false;
-                await Application.Current.MainPage.DisplayAlert("warning", "no places", "ok");
+                await Application.Current.MainPage.DisplayAlert("ошибка", "в библиотеке нет мест", "ок");
                 return;
             }
 
