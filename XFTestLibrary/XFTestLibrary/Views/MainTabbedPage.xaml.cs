@@ -30,7 +30,7 @@ namespace XFTestLibrary.Views
 
             token.User.LastIn = DateTime.Now;
             await App.Database.UpdateUserAsync(token.User);
-
+            Preferences.Set(Strings.Token, JsonConvert.SerializeObject(token));
 
             isLoaded = true;
         }
