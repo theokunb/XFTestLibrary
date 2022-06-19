@@ -7,7 +7,7 @@ namespace XFTestLibrary.Models
         public AuthentificationToken(User user)
         {
             this.user = user;
-            lifeTime = 10;
+            lifeTime = 100;
         }
 
         private readonly User user;

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Timers;
@@ -14,7 +15,7 @@ namespace XFTestLibrary.ViewModels
         public BooksViewModel()
         {
             isBusy = false;
-            Books = new ObservableCollection<Book>();
+            Books = new ObservableCollection<BookWithImage>();
             Filters = new ObservableCollection<Filter>();
             filter = new FilterSource();
             timer = new Timer();
@@ -40,7 +41,7 @@ namespace XFTestLibrary.ViewModels
 
 
         public ObservableCollection<Filter> Filters { get; set; }
-        public ObservableCollection<Book> Books { get; set; }
+        public ObservableCollection<BookWithImage> Books { get; set; }
         public ICommand CommandAppearing { get; }
         public ICommand CommandRefreshView { get; }
         public ICommand CommandBookTapped { get; }
@@ -101,9 +102,13 @@ namespace XFTestLibrary.ViewModels
             Books.Clear();
 
             var books = await App.Database.GetBooksByFilterAsync(SelectedFilter, SearchPattern);
-
             foreach (var element in books)
-                Books.Add(element);
+            {
+                var coverFullPath = (await App.Database.GetCoverAsync(element.IdCover)).FullPath;
+                Books.Add(new BookWithImage(element, coverFullPath));
+            }
+
+            
 
             IsRefreshingView = false;
         }

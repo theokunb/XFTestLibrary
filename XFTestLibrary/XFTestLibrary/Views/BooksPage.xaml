@@ -29,8 +29,12 @@
                         <BindableLayout.ItemTemplate>
                             <DataTemplate>
                                 <Frame CornerRadius="10">
-                                    <StackLayout Orientation="Vertical">
-                                        <Label Text="{Binding Title}"/>
+                                    <StackLayout Orientation="Horizontal">
+                                        <Image Source="{Binding Cover}"
+                                               Aspect="AspectFill"
+                                               WidthRequest="60"
+                                               HeightRequest="100"/>
+                                        <Label Text="{Binding Book.Title}"/>
                                     </StackLayout>
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:BooksViewModel}}, Path=CommandBookTapped}"
