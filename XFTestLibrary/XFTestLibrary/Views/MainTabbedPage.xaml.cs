@@ -1,32 +1,36 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using Newtonsoft.Json;
+using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XFTestLibrary.Helpers;
+using XFTestLibrary.Models;
 
 namespace XFTestLibrary.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MainTabbedPage : TabbedPage
     {
-        public MainTabbedPage()
+        public MainTabbedPage(AuthentificationToken token)
         {
             InitializeComponent();
+            this.token = token;
             isLoaded = false;
         }
 
         private bool isLoaded;
+        private AuthentificationToken token;
 
-
-        protected override void OnAppearing()
+        protected override async void OnAppearing()
         {
             if (isLoaded)
                 return;
             Children.Add(new BooksPage());
             Children.Add(new EditBooksPage());
+
+            token.User.LastIn = DateTime.Now;
+            await App.Database.UpdateUserAsync(token.User);
+
 
             isLoaded = true;
         }

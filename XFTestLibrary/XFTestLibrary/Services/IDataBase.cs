@@ -29,5 +29,10 @@ namespace XFTestLibrary.Services
         Task RemoveBookAndGenre(int idBook);
         Task<Cover> InsertCoverAsync(Cover cover);
         Task<Cover> GetCoverAsync(int idCover);
+
+        Task<int> InsertUserAsync(User user);
+        Task<AuthentificationToken> AuthorizeWithLoginPasswordAsync(string login,string password);
+        Task<User> GetUserByUserName(string userName);
+        Task<int> UpdateUserAsync(User user);
     }
 }

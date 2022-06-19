@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:XFTestLibrary.ViewModels"
+             x:Class="XFTestLibrary.Views.LoginPage">
+    <ContentPage.BindingContext>
+        <viewmodel:LoginViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Margin="10">
+            <Entry Text="{Binding Login}"
+                   Placeholder="Login"
+                   Margin="0,300,0,0"/>
+            <Entry Text="{Binding Password}"
+                   Placeholder="Password"
+                   IsPassword="True"/>
+            <StackLayout Orientation="Horizontal"
+                         Margin="30,50">
+                <Label Text="no account? Sign up"
+                       VerticalOptions="StartAndExpand">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CommandSignUp}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Button Text="sign in"
+                        HorizontalOptions="EndAndExpand"
+                        Command="{Binding CommandSingIn}"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -18,6 +18,7 @@ namespace XFTestLibrary.Models
             database.CreateTableAsync<Genre>().Wait();
             database.CreateTableAsync<BookPlace>().Wait();
             database.CreateTableAsync<Cover>().Wait();
+            database.CreateTableAsync<User>().Wait();
         }
 
         private readonly SQLiteAsyncConnection database;
@@ -201,6 +202,38 @@ namespace XFTestLibrary.Models
         public Task<Cover> GetCoverAsync(int idCover)
         {
             return database.Table<Cover>().Where(cover => cover.Id == idCover).FirstAsync();
+        }
+
+        public Task<int> InsertUserAsync(User user)
+        {
+            return database.InsertAsync(user);
+        }
+
+        public async Task<AuthentificationToken> AuthorizeWithLoginPasswordAsync(string login, string password)
+        {
+            var result = await database.QueryAsync<User>($"select * from User where Login like'{login}' and PasswordHash like '{password}'");
+            if (result.Count == 0)
+                return new AuthentificationToken(null);
+            else
+            { 
+                var token = new AuthentificationToken(result.First());
+                token.User.LastIn = System.DateTime.Now;
+                return token;
+            }
+        }
+
+        public async Task<User> GetUserByUserName(string userName)
+        {
+            var result = await database.QueryAsync<User>($"select * from User where Login like '{userName}'");
+            if (result.Count == 0)
+                return null;
+            else
+                return result.First();
+        }
+
+        public Task<int> UpdateUserAsync(User user)
+        {
+            return database.UpdateAsync(user);
         }
     }
 }

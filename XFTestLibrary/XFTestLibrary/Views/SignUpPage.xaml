@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="XFTestLibrary.Views.SignUpPage"
+             Title="Sign up">
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout Margin="10">
+                <Entry Text="{Binding FirstName}"
+                       Placeholder="First name"/>
+                <Entry Text="{Binding LastName}"
+                       Placeholder="Last name"/>
+                <Entry Text="{Binding UserName}"
+                       Placeholder="User name"/>
+                <Entry Text="{Binding Password1}"
+                       Placeholder="Password"
+                       IsPassword="True"/>
+                <Entry Text="{Binding Password2}"
+                       Placeholder="Repeat password"
+                       IsPassword="True"/>
+            </StackLayout>
+            <Button Text="sign up"
+                    VerticalOptions="End"
+                    Command="{Binding CommandSignUp}"
+                    IsEnabled="{Binding AllFieldsFilled}"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

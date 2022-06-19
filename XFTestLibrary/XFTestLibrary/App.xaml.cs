@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using XFTestLibrary.Helpers;
 using XFTestLibrary.Models;
 using XFTestLibrary.Services;
 using XFTestLibrary.Views;
@@ -14,7 +17,12 @@ namespace XFTestLibrary
         {
             InitializeComponent();
 
-            MainPage = new MainTabbedPage();
+            var savedToken = Preferences.Get(Strings.Token, string.Empty);
+            var token = JsonConvert.DeserializeObject<AuthentificationToken>(savedToken);
+            if (token == null || !token.IsValidToken)
+                MainPage = new LoginPage();
+            else
+                MainPage = new MainTabbedPage(token);
         }
 
 

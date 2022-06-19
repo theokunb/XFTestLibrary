@@ -15,7 +15,7 @@
     <ContentPage.Content>
         <Grid>
             <ScrollView Orientation="Vertical">
-                <StackLayout>
+                <StackLayout Margin="10">
                     <Entry Text="{Binding BookTitle}"
                            Placeholder="title"/>
 

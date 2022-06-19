@@ -17,7 +17,8 @@
                      Command="{Binding CommandRefreshView}">
             <ScrollView Orientation="Vertical"
                         VerticalScrollBarVisibility="Never">
-                <StackLayout Orientation="Vertical">
+                <StackLayout Orientation="Vertical"
+                             Margin="10">
                     <Picker SelectedItem="{Binding SelectedFilter}"
                             ItemsSource="{Binding Filters}"
                             ItemDisplayBinding="{Binding Title}"/>
