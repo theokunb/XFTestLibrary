@@ -108,13 +108,20 @@ namespace XFTestLibrary.ViewModels
             var books = await App.Database.GetBooksByFilterAsync(SelectedFilter, SearchPattern);
             foreach (var element in books)
             {
+                var bookplace = await App.Database.GetBookPlaceAsync(element.Id);
                 if (element.IdCover > 0)
                 {
                     var cover = await App.Database.GetCoverAsync(element.IdCover);
-                    Books.Add(new BookWithImage(element, cover.FullPath));
+                    Books.Add(new BookWithImage(element, cover.FullPath)
+                    {
+                        BookPlace = bookplace
+                    });
                 }
                 else
-                    Books.Add(new BookWithImage(element, string.Empty));
+                    Books.Add(new BookWithImage(element, string.Empty)
+                    {
+                        BookPlace = bookplace
+                    });
             }
 
             

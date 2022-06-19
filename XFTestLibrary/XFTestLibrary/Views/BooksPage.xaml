@@ -34,7 +34,17 @@
                                                Aspect="AspectFill"
                                                WidthRequest="60"
                                                HeightRequest="100"/>
-                                        <Label Text="{Binding Book.Title}"/>
+                                        <StackLayout Orientation="Vertical">
+                                            <Label Text="{Binding Book.Title}"/>
+                                            <StackLayout Orientation="Horizontal">
+                                                <Label Text="Шкаф:"/>
+                                                <Label Text="{Binding BookPlace.DisplayRack}"/>
+                                                <Label Text=" Полка:"/>
+                                                <Label Text="{Binding BookPlace.DisplayShelf}"/>
+                                                <Label Text=" Ряд:"/>
+                                                <Label Text="{Binding BookPlace.DisplayRow}"/>
+                                            </StackLayout>
+                                        </StackLayout>
                                     </StackLayout>
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodels:BooksViewModel}}, Path=CommandBookTapped}"

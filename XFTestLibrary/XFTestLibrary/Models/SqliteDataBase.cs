@@ -235,5 +235,14 @@ namespace XFTestLibrary.Models
         {
             return database.UpdateAsync(user);
         }
+
+        public async Task<BookPlace> GetBookPlaceAsync(int idBook)
+        {
+            var result = await database.QueryAsync<BookPlace>($"select * from BookPlace where id={idBook}");
+            if (result.Count == 0)
+                return null;
+            else
+                return result.First();
+        }
     }
 }

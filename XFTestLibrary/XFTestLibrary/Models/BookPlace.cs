@@ -9,5 +9,10 @@ namespace XFTestLibrary.Models
         public int Row { get; set; }
         public int Rack { get; set; }
         public int Shelf { get; set; }
+
+
+        public int DisplayRow => Row + 1;
+        public int DisplayRack => Rack + 1;
+        public int DisplayShelf => Shelf + 1;
     }
 }

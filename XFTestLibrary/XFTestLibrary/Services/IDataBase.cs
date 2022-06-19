@@ -34,5 +34,6 @@ namespace XFTestLibrary.Services
         Task<AuthentificationToken> AuthorizeWithLoginPasswordAsync(string login,string password);
         Task<User> GetUserByUserName(string userName);
         Task<int> UpdateUserAsync(User user);
+        Task<BookPlace> GetBookPlaceAsync(int idBook);
     }
 }

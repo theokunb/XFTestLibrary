@@ -14,5 +14,6 @@ namespace XFTestLibrary.Models
 
         public Book Book { get; set; }
         public ImageSource Cover { get; set; }
+        public BookPlace BookPlace { get; set; }
     }
 }
