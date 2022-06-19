@@ -149,6 +149,7 @@ namespace XFTestLibrary.ViewModels
         private void ClearAllFields()
         {
             BookTitle = string.Empty;
+            ImageCover = null;
             Authors.Clear();
             Genres.Clear();
         }

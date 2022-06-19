@@ -142,7 +142,7 @@ namespace XFTestLibrary.Models
             }
             else
             {
-                var result = database.QueryAsync<Book>($"select Book.Id, Book.Title, Book.IdPlace from Book " +
+                var result = database.QueryAsync<Book>($"select Book.Id, Book.Title, Book.IdPlace, Book.IdCover from Book " +
                     $"join BookAndAuthor on Book.Id = BookAndAuthor.IdBook " +
                     $"join Author on BookAndAuthor.IdAuthor = Author.Id where Author.FullName like '%{pattern}%'");
                 return result;
@@ -157,7 +157,7 @@ namespace XFTestLibrary.Models
             }
             else
             {
-                var result = database.QueryAsync<Book>($"select Book.Id, Book.Title, Book.IdPlace from Book " +
+                var result = database.QueryAsync<Book>($"select Book.Id, Book.Title, Book.IdPlace, Book.IdCover from Book " +
                     $"join BookAndGenre on Book.Id = BookAndGenre.IdBook " +
                     $"join Genre on BookAndGenre.IdGenre = Genre.Id where Genre.Title like '%{pattern}%'");
                 return result;
