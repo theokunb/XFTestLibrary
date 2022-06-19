@@ -14,7 +14,8 @@ namespace XFTestLibrary.ViewModels
     {
         public BooksViewModel()
         {
-            isBusy = false;
+            IsBusy = false;
+            isLoaded = false;
             Books = new ObservableCollection<BookWithImage>();
             Filters = new ObservableCollection<Filter>();
             filter = new FilterSource();
@@ -38,6 +39,7 @@ namespace XFTestLibrary.ViewModels
         private Filter selectedFilter;
         private string searchPattern;
         private Timer timer;
+        private bool isLoaded;
 
 
         public ObservableCollection<Filter> Filters { get; set; }
@@ -89,13 +91,15 @@ namespace XFTestLibrary.ViewModels
 
         private void OnAppearing(object param)
         {
-            if(Filters.Count == 0)
-            {
-                foreach (var element in filter)
-                    Filters.Add(element);
-                SelectedFilter = Filters.First();
-            }
+            if (isLoaded)
+                return;
+
+            foreach (var element in filter)
+                Filters.Add(element);
+            SelectedFilter = Filters.First();
             IsRefreshingView = true;
+
+            isLoaded = true;
         }
         private async void OnRefreshView(object param)
         {
@@ -104,8 +108,13 @@ namespace XFTestLibrary.ViewModels
             var books = await App.Database.GetBooksByFilterAsync(SelectedFilter, SearchPattern);
             foreach (var element in books)
             {
-                var coverFullPath = (await App.Database.GetCoverAsync(element.IdCover)).FullPath;
-                Books.Add(new BookWithImage(element, coverFullPath));
+                if (element.IdCover > 0)
+                {
+                    var cover = await App.Database.GetCoverAsync(element.IdCover);
+                    Books.Add(new BookWithImage(element, cover.FullPath));
+                }
+                else
+                    Books.Add(new BookWithImage(element, string.Empty));
             }
 
             
@@ -117,13 +126,13 @@ namespace XFTestLibrary.ViewModels
             if (IsBusy)
                 return;
             IsBusy = true;
-            Book selectedBook = (Book)param;
+            BookWithImage selectedBook = (BookWithImage)param;
             if (selectedBook == null)
             {
                 IsBusy = false;
                 return;
             }
-            await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new BookDetailsPage(selectedBook)));
+            await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new BookDetailsPage(selectedBook.Book)));
             IsBusy = false;
         }
     }

@@ -8,7 +8,8 @@ namespace XFTestLibrary.Models
         public BookWithImage(Book book,string imagePath)
         {
             Book = book;
-            Cover = ImageSource.FromUri(new Uri(imagePath));
+            if (!string.IsNullOrEmpty(imagePath))
+                Cover = ImageSource.FromUri(new Uri(imagePath));
         }
 
         public Book Book { get; set; }
